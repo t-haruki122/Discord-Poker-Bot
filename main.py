@@ -30,18 +30,18 @@ class game:
         self.pbet = players[id].default_bet
         self.pchange = [False for _ in range(5)]
 
-        # デッキの初期化
+        # initialization of deck
         self.deck = Deck()
         self.deck.shuffle()
 
-        # 手札の初期化
+        # initialization of hand
         self.phand = Hands([self.deck.draw() for _ in range(5)])
         self.bhand = Hands([self.deck.draw() for _ in range(5)])
 
-        # 初期ベット
+        # initialize bet
         players[id].bet(self.pbet)
 
-        # 10分経ったらゲーム終了
+        # 10 minutes timer start
         self.start_time = time.time()
     
     def __repr__(self):
@@ -150,12 +150,12 @@ def is_player_already(id):
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name="テスト中"))
-    await client.get_channel(CHANNEL_ID).send("on_ready")
+    await client.change_presence(activity=discord.Game(name="On Ready, Use /pkstart"))
+    await client.get_channel(CHANNEL_ID).send("on ready !!")
     await slash.sync()
 
 
-# プレイヤー系コマンド
+# PLAYER COMMANDs
 @slash.command(name="pkregistar", description="ポーカーのプレイヤー登録をします")
 async def pkregistar_command(interaction: discord.Interaction):
     global players
@@ -206,17 +206,17 @@ async def pksetbet_command(interaction: discord.Interaction, bet: int):
     await interaction.response.send_message(msg)
 
 
-# ゲーム内系コマンド
+# GAME COMMANDs
 @slash.command(name="pkstart", description="ポーカーのボットゲームを開始します")
 async def pkstart_command(interaction: discord.Interaction):
     global players, games
 
-    # 10分タイマー
+    # 10 minutes timer
     for i in games.keys():
         if time.time() - games[i].start_time > game_time:
             games.pop(i)
             user = await client.fetch_user(i)
-            await user.send("終了時刻を超えたので，ゲームが終了しました")
+            await user.send("終了時刻を超えたので，ゲームが終了しました") # send DM
 
     uid = interaction.user.id
     if not is_player_already(uid):
@@ -242,7 +242,7 @@ async def pkstart_command(interaction: discord.Interaction):
     await interaction.response.send_message(msg)
 
 
-@slash.command(name="pkbet", description="ポーカーのベットをします．")
+@slash.command(name="pkbet", description="ポーカーのベットをします")
 async def pkbet_command(interaction: discord.Interaction, bet: int):
     global players, games
     uid = interaction.user.id
@@ -256,7 +256,7 @@ async def pkbet_command(interaction: discord.Interaction, bet: int):
         await interaction.response.send_message("ベット額は初期ベット額({}) 以上にしてください".format(players[uid].default_bet))
         return
     games[uid].bet(bet)
-    msg = "ベットが完了しました．\n```ベット額: {}\n残金: {}```".format(bet, players[uid].money)
+    msg = "ベットが完了しました\n```ベット額: {}\n残金: {}```".format(bet, players[uid].money)
     await interaction.response.send_message(msg)
 
 
