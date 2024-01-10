@@ -212,11 +212,14 @@ async def pkstart_command(interaction: discord.Interaction):
     global players, games
 
     # 10 minutes timer
+    delete_list = []
     for i in games.keys():
         if time.time() - games[i].start_time > game_time:
-            games.pop(i)
+            delete_list.append(i)
             user = await client.fetch_user(i)
             await user.send("終了時刻を超えたので，ゲームが終了しました") # send DM
+    for i in delete_list:
+        games.pop(i)
 
     uid = interaction.user.id
     if not is_player_already(uid):
