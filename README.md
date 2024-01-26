@@ -5,7 +5,7 @@ A Discord bot of a plain poker game with bot.
 Users can play in text channel, using slash(/) command.
 
 # THE BOT NOT AVAILABLE NOW DUE TO OUR ROUTER BREAKDOWN  
-Please launch yourselves if you are interested in this bot.
+Please launch yourselves if you are interested in this bot. (1/27/24)
 
 ## Description
 Try this bot easily:
