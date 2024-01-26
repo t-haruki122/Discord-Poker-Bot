@@ -4,8 +4,7 @@ POKER Bot in Discord
 A Discord bot of a plain poker game with bot.  
 Users can play in text channel, using slash(/) command.
 
-# 現在ルーター故障によりBotが停止しています。
-# THE BOT NOT AVAILABLE DUE TO MY ROUTER BREAKDOWN.
+# THE BOT NOT AVAILABLE NOW, DUE TO OUR ROUTER BREAKDOWN.
 
 ## Description
 Try this bot easily:
